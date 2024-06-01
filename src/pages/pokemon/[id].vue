@@ -65,7 +65,10 @@
           </v-card>
         </v-col>
         <v-col>
-          <v-container class="mt-12">{{ pokemon.flavor_text }}</v-container>
+          <v-container class="mt-12 text-capitalize">
+            <h1>#{{ pokemon.id }} {{pokemon.name}}</h1>
+          </v-container>
+          <v-container>{{ pokemon.flavor_text }}</v-container>
           <v-card></v-card>
           <v-container class="text-capitalize d-flex ga-2">
             <v-chip :color="typeColors[type]" variant="flat" v-for="type in pokemon.types" :key="type">
