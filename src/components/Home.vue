@@ -23,7 +23,7 @@
     </div>
     <v-tabs-window v-model="tab">
       <v-tabs-window-item value="1" class="list">
-        <PokemonList :filter="filter"/>
+        <PokemonList :filter="filter.toLowerCase()"/>
       </v-tabs-window-item>
 
       <v-tabs-window-item value="2">
