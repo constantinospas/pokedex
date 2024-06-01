@@ -17,56 +17,133 @@
             <v-card-text class="mt-4">
               <v-slider
                 v-model="pokemon.stats.hp"
-                thumb-label
-                label="HP"
                 thumb-color="red"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats.hp"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="HP" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+              </v-slider>
               <v-slider
                 v-model="pokemon.stats.attack"
-                thumb-label
-                label="Attack"
                 thumb-color="blue"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats.attack"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="Attack" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+
+              </v-slider>
 
               <v-slider
                 v-model="pokemon.stats.defense"
-                thumb-label
-                label="Defense"
                 thumb-color="green"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats.defense"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="Defense" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+
+              </v-slider>
 
               <v-slider
                 v-model="pokemon.stats['special-attack']"
-                thumb-label
-                label="Sp. Attack"
                 thumb-color="cyan"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats['special-attack']"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="Special Attack" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+
+              </v-slider>
 
               <v-slider
                 v-model="pokemon.stats['special-defense']"
-                thumb-label
-                label="Sp. Defense"
                 thumb-color="lime"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats['special-defense']"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="Special Defense" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+
+              </v-slider>
 
               <v-slider
                 v-model="pokemon.stats.speed"
-                thumb-label
-                label="Speed"
                 thumb-color="white"
                 readonly
-              ></v-slider>
+              >
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pokemon.stats.speed"
+                    density="compact"
+                    style="width: 60px"
+                    variant="outlined"
+                    hide-details
+                    readonly
+                  ></v-text-field>
+                </template>
+                <template v-slot:label>
+                  <v-label text="Speed" style="width: 120px;" class="d-flex justify-center"/>
+                </template>
+
+              </v-slider>
             </v-card-text>
           </v-card>
         </v-col>
         <v-col>
           <v-container class="mt-12 text-capitalize">
-            <h1>#{{ pokemon.id }} {{pokemon.name}}</h1>
+            <h1>#{{ pokemon.id }} {{ pokemon.name }}</h1>
           </v-container>
           <v-container>{{ pokemon.flavor_text }}</v-container>
           <v-card></v-card>
