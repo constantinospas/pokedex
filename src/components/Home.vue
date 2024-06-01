@@ -45,11 +45,11 @@ export default {
 
 <style scoped>
 .container {
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 
   .list {
-    height: calc(100vh - 72px - 78px - 12px);
+    height: calc(100dvh - 72px - 78px - 12px);
     overflow: auto;
   }
 }
