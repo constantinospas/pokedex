@@ -13,8 +13,9 @@
       <v-card-actions>
         <v-btn-group variant="flat" class="d-flex w-100 justify-center">
           <v-btn @click="view(pokemon.id)">View</v-btn>
-          <v-btn symbol="star">Favourite
-            <v-icon color="yellow" icon="mdi-star-outline" end></v-icon>
+          <v-btn symbol="star" @click="handleFavourite(pokemon)">
+            Favourite
+            <v-icon color="yellow" :icon="store.isFavourite(pokemon.id) ? 'mdi-star' :'mdi-star-outline'" end/>
           </v-btn>
         </v-btn-group>
       </v-card-actions>
@@ -25,10 +26,20 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { useFavouriteStore } from '../stores/favourites';
 
 const router = useRouter();
-
+const store = useFavouriteStore();
 defineProps(['pokemon']);
+
+function handleFavourite(pokemon) {
+  if (store.isFavourite(pokemon.id)) {
+    store.removePokemon(pokemon.id);
+  } else {
+    store.addPokemon(pokemon);
+  }
+  console.log(store.favourites);
+}
 
 function view(id: number) {
   router.push(`/pokemon/${id}`);

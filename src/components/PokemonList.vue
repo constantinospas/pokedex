@@ -10,8 +10,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps(['filter']);
-console.log(props.filter);
+const props = defineProps(['filter', 'pokemons']);
 import PokemonCard from './PokemonCard.vue';
 import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
@@ -33,7 +32,7 @@ const POKEMON_QUERY = gql`
   }
  }`;
 const { result, loading, error } = useQuery(POKEMON_QUERY);
-console.log(error);
+
 const pokemons = computed(() => {
   if (result.value && result.value.pokemon_v2_pokemon && result.value.pokemon_v2_pokemon.length) {
     let simplified = result.value.pokemon_v2_pokemon;
@@ -57,6 +56,5 @@ const pokemons = computed(() => {
 <style scoped>
 .transition {
   transition-duration: 500ms;
-  animation-duration: 500ms;
 }
 </style>
