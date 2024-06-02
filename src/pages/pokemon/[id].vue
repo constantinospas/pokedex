@@ -1,5 +1,5 @@
 <template>
-  <v-container class="container pa-16">
+  <v-container class="container pa-16" :key="pokemonId">
     <RouterLink to="/">
       <v-btn prepend-icon="mdi-arrow-left">Back</v-btn>
     </RouterLink>
@@ -7,7 +7,7 @@
       <v-skeleton-loader width="75%" height="100%" type="card-avatar"></v-skeleton-loader>
     </div>
     <div v-if="error">Error: {{ error.message }}</div>
-    <div v-if="result && result" class="mt-2 mx-2 d-flex flex-wrap justify-center">
+    <div v-if="result && !loading" class="mt-2 mx-2 d-flex flex-wrap justify-center">
       <v-row>
         <v-col>
           <div class="d-flex mb-12">
@@ -155,6 +155,15 @@
           <v-container>
             <v-btn @click="playCry" icon="mdi-volume-high"></v-btn>
           </v-container>
+          <v-container v-if="pokemon.evolution_chain.length" class="d-flex flex-column">
+            Evolutions
+            <v-btn-group>
+              <v-btn v-for="evolution in pokemon.evolution_chain" :key="evolution" @click="updateId(evolution.id)">
+                  <v-img width="30" height="30" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`"/>
+                {{ evolution.name }}
+              </v-btn>
+            </v-btn-group>
+          </v-container>
         </v-col>
       </v-row>
     </div>
@@ -164,11 +173,19 @@
 <script setup lang="ts">
 import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router/auto';
 
 const route = useRoute();
-console.log(route.params.id);
+const pokemonId = ref(route.params.id);
+
+watch(pokemonId, async (nv, ov) => {
+  await refetch({ id: nv });
+});
+
+function updateId(newId) {
+  pokemonId.value = newId;
+}
 
 const typeColors = {
   normal: '#A8A77A',
@@ -190,10 +207,9 @@ const typeColors = {
   steel: '#B7B7CE',
   fairy: '#D685AD'
 };
-
 const POKEMON_QUERY = gql`
-query getPokemon {
-  pokemon_v2_pokemon(where: {id: {_eq: ${route.params.id}}}) {
+query getPokemon ($id: Int!) {
+  pokemon_v2_pokemon(where: {id: {_eq: $id}}) {
     id
     name
     types: pokemon_v2_pokemontypes {
@@ -226,8 +242,9 @@ query getPokemon {
     }
   }
 }`;
-const { result, loading, error } = useQuery(POKEMON_QUERY);
-console.log(result);
+
+let { result, loading, error, refetch } = useQuery(POKEMON_QUERY, { id: pokemonId.value });
+
 const pokemon = computed(() => {
   return result.value.pokemon_v2_pokemon.map(pokemon => {
     // Extract types
@@ -266,7 +283,6 @@ function playCry() {
   audio.volume = 0.2;
   audio.play();
 }
-
 
 </script>
 

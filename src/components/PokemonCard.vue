@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router/auto';
 import { useFavouriteStore } from '../stores/favourites';
+import { useRouter } from 'vue-router/auto';
 
 const router = useRouter();
 const store = useFavouriteStore();

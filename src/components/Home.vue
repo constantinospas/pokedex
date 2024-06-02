@@ -27,11 +27,15 @@
       </v-tabs-window-item>
 
       <v-tabs-window-item value="2" class="list">
-        <div class="mt-2 mx-2 d-flex flex-wrap justify-center flex-1-1-100">
+        <div class="mt-2 mx-2 d-flex flex-wrap justify-center flex-1-1-100"
+             v-if="store.sortedFavourites.filter(sortedPoke => sortedPoke.name.includes(filter?.toLowerCase())).length">
           <div v-for="pokemon in store.sortedFavourites.filter(sortedPoke => sortedPoke.name.includes(filter?.toLowerCase()))"
                :key="pokemon.id" class="d-flex my-2 mx-1 pa-0 justify-center transition">
             <PokemonCard :pokemon="pokemon"/>
           </div>
+        </div>
+        <div v-else class="v-container d-flex justify-center text-h6">
+          No data
         </div>
       </v-tabs-window-item>
     </v-tabs-window>
@@ -41,7 +45,6 @@
 <script>
 import { useFavouriteStore } from '../stores/favourites'
 import PokemonCard from './PokemonCard.vue'
-import { ref } from 'vue'
 
 export default {
   components: { PokemonCard },
