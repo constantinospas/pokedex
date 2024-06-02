@@ -16,11 +16,11 @@ body, html {
 }
 
 //Hide Sliders under 500px
-@media (max-width: 500px) {
-  .v-slider__container {
-    display: none !important;
-  }
-}
+//@media (max-width: 500px) {
+//  .v-slider__container {
+//    display: none !important;
+//  }
+//}
 
 //Disable ripple on sliders
 .v-slider-thumb__surface::after, .v-slider-thumb__surface::before, .v-slider-thumb__ripple {

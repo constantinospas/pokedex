@@ -8,7 +8,7 @@
     </div>
     <div v-if="error">Error: {{ error.message }}</div>
     <div v-if="result && !loading" class="mt-2 mx-2 d-flex flex-wrap justify-center">
-      <v-row>
+      <v-row style="width: 100dvw;">
         <v-col>
           <div class="d-flex mb-12">
             <v-img :src="pokemon.image" height="200" width="200"></v-img>
@@ -156,10 +156,10 @@
             <v-btn @click="playCry" icon="mdi-volume-high"></v-btn>
           </v-container>
           <v-container v-if="pokemon.evolution_chain.length" class="d-flex flex-column">
-            Evolutions
-            <v-btn-group>
+            <v-btn-group class="d-flex flex-wrap flex-1-1-100 ga-2">
               <v-btn v-for="evolution in pokemon.evolution_chain" :key="evolution" @click="updateId(evolution.id)">
-                  <v-img width="30" height="30" :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`"/>
+                  <v-img width="50" height="50" class="mr-4"
+                         :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`"/>
                 {{ evolution.name }}
               </v-btn>
             </v-btn-group>
