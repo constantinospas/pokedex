@@ -16,13 +16,13 @@
         Favorites
       </v-tab>
     </v-tabs>
-    <div class="d-flex align-center mt-6" style="height: 120px;flex-direction: column">
+    <div class="d-flex align-center mt-6 vertical-scroll" style="height: 120px;flex-direction: column">
       <div class="d-flex" style="width: 20%;min-width: 210px">
         <v-text-field v-model="filter" single-line append-inner-icon="mdi-magnify" label="Search Pokemon" width="100%"></v-text-field>
       </div>
-      <div class="d-flex text-capitalize ga-1">
+      <div class="d-flex text-capitalize ga-1 overflow-x-auto" style="width: 100dvw;">
         <v-chip :color="typeColors[idx]" v-for="(type,idx) in typeNames" :key="type" @click="filterByType(type)"
-                :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'">
+                :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'" style="min-width: max-content;">
           {{ type }}
         </v-chip>
       </div>
@@ -77,7 +77,7 @@ import { types } from '../variables/types'
 import { computed, ref } from 'vue'
 import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
-import { useRouter } from 'vue-router/auto';
+import { useRouter } from 'vue-router/auto'
 
 export default {
   components: { PokemonCard },
@@ -93,7 +93,7 @@ export default {
       { title: 'Generation', align: 'start', key: 'generation' },
       { title: 'Actions', align: 'center', key: 'actions' },
     ]
-    const router = useRouter();
+    const router = useRouter()
     const POKEMON_QUERY = gql`
   query Pokemon {
     pokemon_v2_pokemon  {
@@ -198,5 +198,16 @@ export default {
     height: calc(100dvh - 84px - 120px - 12px);
     overflow: auto;
   }
+
+  .vertical-scroll {
+    ::-webkit-scrollbar {
+      height: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+  }
+
 }
 </style>
