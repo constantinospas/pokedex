@@ -158,8 +158,8 @@
           <v-container v-if="pokemon.evolution_chain.length" class="d-flex flex-column">
             <v-btn-group class="d-flex flex-wrap flex-1-1-100 ga-2">
               <v-btn v-for="evolution in pokemon.evolution_chain" :key="evolution" @click="updateId(evolution.id)">
-                  <v-img width="50" height="50" class="mr-4"
-                         :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`"/>
+                <v-img width="50" height="50" class="mr-4"
+                       :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${evolution.id}.svg`"/>
                 {{ evolution.name }}
               </v-btn>
             </v-btn-group>
@@ -175,6 +175,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router/auto';
+import {types} from '../../variables/types';
 
 const route = useRoute();
 const pokemonId = ref(route.params.id);
@@ -187,26 +188,7 @@ function updateId(newId) {
   pokemonId.value = newId;
 }
 
-const typeColors = {
-  normal: '#A8A77A',
-  fire: '#EE8130',
-  water: '#6390F0',
-  electric: '#F7D02C',
-  grass: '#7AC74C',
-  ice: '#96D9D6',
-  fighting: '#C22E28',
-  poison: '#A33EA1',
-  ground: '#E2BF65',
-  flying: '#A98FF3',
-  psychic: '#F95587',
-  bug: '#A6B91A',
-  rock: '#B6A136',
-  ghost: '#735797',
-  dragon: '#6F35FC',
-  dark: '#705746',
-  steel: '#B7B7CE',
-  fairy: '#D685AD'
-};
+const typeColors = types;
 const POKEMON_QUERY = gql`
 query getPokemon ($id: Int!) {
   pokemon_v2_pokemon(where: {id: {_eq: $id}}) {

@@ -4,13 +4,13 @@
   </div>
   <div v-if="error">Error: {{ error.message }}</div>
   <div v-if="result && result" class="mt-2 mx-2 d-flex flex-wrap justify-center flex-1-1-100">
-    <div v-for="pokemon in pokemons" :key="pokemon.id" class="d-flex my-2 mx-1 pa-0 justify-center transition">
+    <div v-for="pokemon in pokemons" :key="pokemon.id" class="d-flex my-2 mx-1 pa-0 justify-center transition" v-memo="pokemons">
       <PokemonCard :pokemon="pokemon"/>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps(['filter', 'pokemons']);
+const props = defineProps(['filter', 'types']);
 import PokemonCard from './PokemonCard.vue';
 import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
@@ -38,6 +38,12 @@ const pokemons = computed(() => {
     let simplified = result.value.pokemon_v2_pokemon;
     if (props.filter && props.filter.length) {
       simplified = result.value.pokemon_v2_pokemon.filter(pokemon => pokemon.name.includes(props.filter));
+    }
+    if (props.types && props.types.length) {
+      simplified = result.value.pokemon_v2_pokemon.filter(pokemon => {
+        const pokemonTypes = pokemon.pokemon_v2_pokemontypes.map(t => t.pokemon_v2_type.name);
+        return props.types.every(filter => pokemonTypes.includes(filter));
+      });
     }
     return simplified.map(pokemon => {
       return {

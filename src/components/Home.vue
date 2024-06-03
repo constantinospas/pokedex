@@ -16,20 +16,24 @@
         Favorites
       </v-tab>
     </v-tabs>
-    <div class="d-flex justify-center mt-6 mb-n3" style="height: 78px;">
+    <div class="d-flex align-center mt-6" style="height: 120px;flex-direction: column">
       <div class="d-flex" style="width: 20%;min-width: 210px">
         <v-text-field v-model="filter" single-line append-inner-icon="mdi-magnify" label="Search Pokemon" width="100%"></v-text-field>
+      </div>
+      <div class="d-flex text-capitalize ga-1">
+        <v-chip :color="typeColors[idx]" v-for="(type,idx) in typeNames" :key="type" @click="filterByType(type)"
+                :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'">
+          {{ type }}
+        </v-chip>
       </div>
     </div>
     <v-tabs-window v-model="tab">
       <v-tabs-window-item value="1" class="list">
-        <PokemonList :filter="filter?.toLowerCase()"/>
+        <PokemonList :filter="filter?.toLowerCase()" :types="selectedTypes"/>
       </v-tabs-window-item>
-
       <v-tabs-window-item value="2" class="list">
-        <div class="mt-2 mx-2 d-flex flex-wrap justify-center flex-1-1-100"
-             v-if="store.sortedFavourites.filter(sortedPoke => sortedPoke.name.includes(filter?.toLowerCase())).length">
-          <div v-for="pokemon in store.sortedFavourites.filter(sortedPoke => sortedPoke.name.includes(filter?.toLowerCase()))"
+        <div class="mt-2 mx-2 d-flex flex-wrap justify-center flex-1-1-100" v-if="favs.length">
+          <div v-for="pokemon in favs"
                :key="pokemon.id" class="d-flex my-2 mx-1 pa-0 justify-center transition">
             <PokemonCard :pokemon="pokemon"/>
           </div>
@@ -45,18 +49,50 @@
 <script>
 import { useFavouriteStore } from '../stores/favourites'
 import PokemonCard from './PokemonCard.vue'
+import { types } from '../variables/types'
+import { ref } from 'vue'
 
 export default {
   components: { PokemonCard },
   setup() {
     const store = useFavouriteStore()
+    const typeNames = Object.keys(types)
+    const typeColors = Object.values(types)
+    const favs = computed(() => {
+      const filtered = store.sortedFavourites.filter(sortedPoke => sortedPoke.name.includes(filter.value.toLowerCase()))
+      console.log(filtered)
+      if (selectedTypes.value && selectedTypes.value.length) {
+        return filtered.filter(fav => {
+          return selectedTypes.value.every(filter => fav.types.includes(filter))
+        })
+      } else {
+        return filtered
+      }
+    })
+    let filter = ref('')
+    let selectedTypes = ref([])
+
+    function filterByType(type) {
+      if (selectedTypes.value.includes(type)) {
+        const idx = selectedTypes.value.findIndex(t => t === type)
+        selectedTypes.value.splice(idx, 1)
+      } else {
+        selectedTypes.value.push(type)
+      }
+    }
+
     return {
       store,
+      filter,
+      favs,
+      typeNames,
+      typeColors,
+      selectedTypes,
+      filterByType,
     }
   },
   data: () => ({
     tab: null,
-    filter: ''
   }),
 }
 </script>
@@ -67,7 +103,7 @@ export default {
   overflow: hidden;
 
   .list {
-    height: calc(100dvh - 72px - 78px - 12px);
+    height: calc(100dvh - 84px - 120px - 12px);
     overflow: auto;
   }
 }
