@@ -20,7 +20,7 @@
       <div class="d-flex" style="width: 20%;min-width: 210px">
         <v-text-field v-model="filter" single-line append-inner-icon="mdi-magnify" label="Search Pokemon" width="100%"></v-text-field>
       </div>
-      <div class="d-flex text-capitalize ga-1 overflow-x-auto" style="width: 100dvw;">
+      <div class="d-flex text-capitalize justify-lg-center ga-1 overflow-x-auto" style="width: 100dvw;">
         <v-chip :color="typeColors[idx]" v-for="(type,idx) in typeNames" :key="type" @click="filterByType(type)"
                 :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'" style="min-width: max-content;">
           {{ type }}
