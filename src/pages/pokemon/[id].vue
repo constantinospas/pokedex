@@ -155,7 +155,7 @@
           <v-container>
             <v-btn @click="playCry" icon="mdi-volume-high"></v-btn>
           </v-container>
-          <v-container v-if="pokemon.evolution_chain.length" class="d-flex flex-column">
+          <v-container v-if="pokemon.evolution_chain.length > 1" class="d-flex flex-column">
             <v-btn-group class="d-flex flex-wrap flex-1-1-100 ga-2">
               <v-btn v-for="evolution in pokemon.evolution_chain" :key="evolution" @click="updateId(evolution.id)">
                 <v-img width="50" height="50" class="mr-4"
