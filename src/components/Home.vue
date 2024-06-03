@@ -22,7 +22,7 @@
       </div>
       <div class="d-flex text-capitalize ga-1 overflow-x-auto overflow-y-hidden" style="width: 100vw;">
         <v-chip :color="typeColors[idx]" v-for="(type,idx) in typeNames" :key="type" @click="filterByType(type)"
-                :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'" style="min-width: 70px">
+                :variant="selectedTypes.includes(type) ? 'flat' : 'outlined'" style="min-width: max-content">
           {{ type }}
         </v-chip>
       </div>
