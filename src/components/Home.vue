@@ -35,7 +35,7 @@
           height="100%"
         >
           <template #[`item.image`]="{item}">
-            <v-avatar :image="item.image"/>
+            <v-img :src="item.image" height="50"/>
           </template>
           <template #[`item.name`]="{item}">
             <p class="text-capitalize">{{ item.name }}</p>
@@ -87,7 +87,7 @@ export default {
     const typeColors = Object.values(types)
     const headers = [
       { title: 'ID', align: 'start', key: 'id' },
-      { title: 'image', align: 'start', key: 'image' },
+      { title: 'Image', align: 'center', key: 'image' },
       { title: 'Name', align: 'start', key: 'name' },
       { title: 'Types', align: 'start', key: 'types' },
       { title: 'Generation', align: 'start', key: 'generation' },
@@ -117,7 +117,7 @@ export default {
           simplified = result.value.pokemon_v2_pokemon.filter(pokemon => pokemon.name.includes(filter.value))
         }
         if (selectedTypes.value && selectedTypes.value.length) {
-          simplified = result.value.pokemon_v2_pokemon.filter(pokemon => {
+          simplified = simplified.filter(pokemon => {
             const pokemonTypes = pokemon.pokemon_v2_pokemontypes.map(t => t.pokemon_v2_type.name)
             return selectedTypes.value.every(filter => pokemonTypes.includes(filter))
           })
