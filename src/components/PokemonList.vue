@@ -40,7 +40,7 @@ const pokemons = computed(() => {
       simplified = result.value.pokemon_v2_pokemon.filter(pokemon => pokemon.name.includes(props.filter));
     }
     if (props.types && props.types.length) {
-      simplified = result.value.pokemon_v2_pokemon.filter(pokemon => {
+      simplified = simplified.filter(pokemon => {
         const pokemonTypes = pokemon.pokemon_v2_pokemontypes.map(t => t.pokemon_v2_type.name);
         return props.types.every(filter => pokemonTypes.includes(filter));
       });
