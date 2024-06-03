@@ -155,7 +155,7 @@
           <v-container>
             <v-btn-group rounded>
               <v-btn  @click="playCry(false)" prepend-icon="mdi-volume-high" rounded>New</v-btn>
-              <v-btn  @click="playCry(true)" prepend-icon="mdi-volume-high">Old</v-btn>
+              <v-btn :disabled="!pokemon.cry_legacy"  @click="playCry(true)" prepend-icon="mdi-volume-high">Old</v-btn>
             </v-btn-group>
           </v-container>
           <v-container v-if="pokemon.evolution_chain.length > 1" class="d-flex flex-column">
