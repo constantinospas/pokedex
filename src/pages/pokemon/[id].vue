@@ -1,5 +1,5 @@
 <template>
-  <v-container class="container pa-16" :key="pokemonId">
+  <v-container class="container pa-lg-16" :key="pokemonId">
     <RouterLink to="/">
       <v-btn prepend-icon="mdi-arrow-left">Back</v-btn>
     </RouterLink>
