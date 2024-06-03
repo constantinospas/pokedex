@@ -153,7 +153,10 @@
             </v-chip>
           </v-container>
           <v-container>
-            <v-btn @click="playCry" icon="mdi-volume-high"></v-btn>
+            <v-btn-group rounded>
+              <v-btn  @click="playCry(false)" prepend-icon="mdi-volume-high" rounded>New</v-btn>
+              <v-btn  @click="playCry(true)" prepend-icon="mdi-volume-high">Old</v-btn>
+            </v-btn-group>
           </v-container>
           <v-container v-if="pokemon.evolution_chain.length > 1" class="d-flex flex-column">
             <v-btn-group class="d-flex flex-wrap flex-1-1-100 ga-2">
@@ -175,7 +178,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router/auto';
-import {types} from '../../variables/types';
+import { types } from '../../variables/types';
 
 const route = useRoute();
 const pokemonId = ref(route.params.id);
@@ -255,13 +258,14 @@ const pokemon = computed(() => {
       image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`,
       evolution_chain: evolutionChain,
       flavor_text: flavorText,
-      cry: pokemon.cries[0].cries.latest
+      cry: pokemon.cries[0].cries.latest,
+      cry_legacy: pokemon.cries[0].cries.legacy
     };
   })[0];
 });
 
-function playCry() {
-  const audio = new Audio(pokemon.value.cry);
+function playCry(legacy) {
+  const audio = new Audio(legacy ? pokemon.value.cry_legacy : pokemon.value.cry);
   audio.volume = 0.2;
   audio.play();
 }

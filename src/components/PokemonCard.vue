@@ -38,7 +38,6 @@ function handleFavourite(pokemon) {
   } else {
     store.addPokemon(pokemon);
   }
-  console.log(store.favourites);
 }
 
 function view(id: number) {
