@@ -144,6 +144,11 @@
         <v-col>
           <v-container class="mt-12 text-capitalize">
             <h1>#{{ pokemon.id }} {{ pokemon.name }}</h1>
+            <v-btn symbol="star" @click="handleFavourite(pokemon)">
+              Favourite
+              <v-icon color="yellow" :icon="store.isFavourite(pokemon.id) ? 'mdi-star' :'mdi-star-outline'" end/>
+            </v-btn>
+
           </v-container>
           <v-container>{{ pokemon.flavor_text }}</v-container>
           <v-card></v-card>
@@ -179,9 +184,11 @@ import { useQuery } from '@vue/apollo-composable';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router/auto';
 import { types } from '../../variables/types';
+import { useFavouriteStore } from '../../stores/favourites';
 
 const route = useRoute();
 const pokemonId = ref(route.params.id);
+const store = useFavouriteStore();
 
 watch(pokemonId, async (nv, ov) => {
   await refetch({ id: nv });
@@ -268,6 +275,14 @@ function playCry(legacy) {
   const audio = new Audio(legacy ? pokemon.value.cry_legacy : pokemon.value.cry);
   audio.volume = 0.2;
   audio.play();
+}
+
+function handleFavourite(pokemon) {
+  if (store.isFavourite(pokemon.id)) {
+    store.removePokemon(pokemon.id);
+  } else {
+    store.addPokemon(pokemon);
+  }
 }
 
 </script>
